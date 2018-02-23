@@ -12,7 +12,7 @@ const initialiseElements = function(){
 const addWordList = function(words){
   const ul = document.createElement('ul');
   words.forEach(function(word){
-    console.log(word);
+    //console.log(word);
     const li = document.createElement('li');
     li.innerText = word.word;
     ul.appendChild(li);
@@ -26,20 +26,49 @@ const getSynonyms = function(){
     words.buildUrl({'ml': user_parameters})
     words.getData();
     words.onUpdate = function(words){
+
+      console.log(words);
       const display = document.querySelector('#word-search');
       display.innerText = '';
       display.appendChild(addWordList(words));
+      buildPieChart(words);
     }
 
 }
 
 const app = function(){
   initialiseElements();
-  //console.log(synonym_search)
   synonym_search_button.addEventListener('click', getSynonyms);
-  //console.log(fetch_data('hello'));
-
+  //new PieChart();
 }
+
+const buildPieChart = function(words) {
+  synonymData = []
+  for(i = 0; i < words.length; i++) {
+    console.log(words[i]);
+    synonymData.push({
+      name: words[i].word,
+      y: words[i].score
+    });
+  }
+  var container = document.getElementById("pieChart");
+  //console.log(synonymData);
+  var chart = new Highcharts.Chart({
+    chart: {
+      type: 'pie',
+      renderTo: container
+    },
+    title: {
+          text: "Synonym"
+       },
+    series: [
+      {
+          data: synonymData
+      }
+    ]
+  });
+
+};
 
 
 document.addEventListener('DOMContentLoaded', app);
