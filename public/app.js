@@ -10,14 +10,13 @@ const initialiseElements = function(){
 }
 
 const addWordList = function(words){
-  const ul = document.createElement('ul');
+  const select = document.createElement('select');
   words.forEach(function(word){
-    //console.log(word);
-    const li = document.createElement('li');
-    li.innerText = word.word;
-    ul.appendChild(li);
+    const option = document.createElement('option');
+    option.innerText = word.word;
+    select.appendChild(option);
   });
-  return ul;
+  return select;
 }
 
 const getSynonyms = function(){
@@ -37,14 +36,25 @@ const getSynonyms = function(){
 }
 
 const app = function(){
-  initialiseElements();
-  synonym_search_button.addEventListener('click', getSynonyms);
+  // initialiseElements();
+  // synonym_search_button.addEventListener('click', getSynonyms);
   //new PieChart();
+  var coords = {lat:51.509865, lng: -0.118092};
+  const mapDiv = document.querySelector('#map');
+  const map = new MapWrapper(mapDiv, coords, 2);
+  map.addClickEvent();
+  const api_handler = new CountriesAPI();
+  api_handler.fetchData();
+  api_handler.onUpdate = function(countries){
+    console.log(countries);
+  }
+  //coords = ma
 }
 
 const buildPieChart = function(words) {
   synonymData = []
-  for(i = 0; i < words.length; i++) {
+  const pieWordCount = Math.min(words.length, 10);
+  for(i = 0; i < pieWordCount; i++) {
     console.log(words[i]);
     synonymData.push({
       name: words[i].word,
