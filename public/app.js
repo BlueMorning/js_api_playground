@@ -2,11 +2,13 @@ let search_results = [];
 let synonym_search;
 let word_search;
 let synonym_search_button;
+let quiz_area;
 
 const initialiseElements = function(){
-  word_search = document.querySelector('#word-search')
-  synonym_search = document.querySelector('#input-search-by-synonym');
-  synonym_search_button = document.querySelector('#search-synonym-btn');
+  //word_search = document.querySelector('#word-search')
+  //synonym_search = document.querySelector('#input-search-by-synonym');
+  //synonym_search_button = document.querySelector('#search-synonym-btn');
+  quiz_area = document.querySelector('#quiz');
 }
 
 const addWordList = function(words){
@@ -36,7 +38,7 @@ const getSynonyms = function(){
 }
 
 const app = function(){
-  // initialiseElements();
+  initialiseElements();
   // synonym_search_button.addEventListener('click', getSynonyms);
   //new PieChart();
   var coords = {lat:51.509865, lng: -0.118092};
@@ -46,11 +48,34 @@ const app = function(){
   const api_handler = new CountriesAPI();
   api_handler.fetchData();
   api_handler.onUpdate = function(countries){
-    console.log(countries);
+    //console.log(countries);
+    var flags = api_handler.getFlags();
+    //console.log(flags);
+    let randomCountry = api_handler.getRandomCountry();
+    buildCountryQuiz(randomCountry);
   }
   //coords = ma
 }
+const buildCountryQuiz = function(country){
+  let question = "What is the capital of?";
+  const questionElement = document.createElement('h3');
+  questionElement.innerHTML = `What is the capital of ${country.name}?`
+  let userCapitalAnswer = document.createElement('input');
+  let userAnswerButton = document.createElement('button');
 
+  userAnswerButton.innerText = "Check!";
+  userAnswerButton.addEventListener('click', function(){
+    if (country.capital=== userCapitalAnswer.value) {
+      console.log("correct");
+    } else {
+      console.log("wrong!");
+    }
+  });
+  quiz_area.appendChild(questionElement);
+  quiz_area.appendChild(userCapitalAnswer);
+  quiz_area.appendChild(userAnswerButton);
+
+}
 const buildPieChart = function(words) {
   synonymData = []
   const pieWordCount = Math.min(words.length, 10);

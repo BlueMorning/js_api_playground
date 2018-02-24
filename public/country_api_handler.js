@@ -6,7 +6,7 @@ var CountriesAPI = function () {
 CountriesAPI.prototype = {
 
   fetchData: function () {
-    var url = 'https://restcountries.eu/rest/v1';
+    var url = 'https://restcountries.eu/rest/v2';
     var request = new XMLHttpRequest();
     request.open("GET", url);
     request.addEventListener('load', function () {
@@ -19,5 +19,18 @@ CountriesAPI.prototype = {
     }.bind(this));
     request.send();
   }
+}
 
+CountriesAPI.prototype.getFlags = function () {
+    var flags = this.countries.map(country = country => [country.flag, country.name, country.latlng])
+    return flags;
+}
+
+CountriesAPI.prototype.getRandomCountry = function() {
+
+  //how to ensure that once a country has been chosen, it wont again?
+  let randomIndex = Math.floor(Math.random() * this.countries.length);
+  //const randomCountry = this.countries.splice(randomIndex, 1);
+  //this.countries.push(randomCountry)
+  return this.countries[randomIndex];
 }
