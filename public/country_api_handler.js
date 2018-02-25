@@ -21,11 +21,6 @@ CountriesAPI.prototype = {
   }
 }
 
-CountriesAPI.prototype.getFlags = function () {
-    var flags = this.countries.map(country = country => [country.flag, country.name, country.latlng])
-    return flags;
-}
-
 CountriesAPI.prototype.getRandomCountry = function() {
 
   //how to ensure that once a country has been chosen, it wont again?

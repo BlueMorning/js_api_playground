@@ -1,4 +1,41 @@
-#map {
+/* #map {
+  width: 400px;
+  height: 400px;
+}
+
+#main-canvas{
   width: 800px;
-  height: 800px;
+  height: 500px;
+} */
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.is-hidden {
+  visibility: hidden;
+}
+
+#map {
+  width: 400px;
+  height: 400px;
+}
+
+.sidebar-container {
+  background: hotpink;
+  width: 250px;
+  height: 100%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+}
+
+.game-container {
+  margin-left: 250px;
 }
